@@ -1,5 +1,7 @@
 FROM openjdk:17
 EXPOSE 8761
+# Create a directory
+RUN mkdir /var/lib/docker/tmp/
 # Download dependencies and cache them in a separate Docker layer
 RUN mvn dependency:go-offline -B
 # Build the project
