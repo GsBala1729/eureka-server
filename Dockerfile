@@ -1,19 +1,19 @@
-FROM openjdk:17
-FROM maven:3.8.4-openjdk-11-slim AS builder
-# Set the working directory
-WORKDIR /app
-EXPOSE 8761
-#RUN docker builder prune --force
-#export DOCKER_BUILDKIT=0
-#RUN docker build
-## Create a directory
-#RUN mkdir /var/lib/docker/tmp/buildkit-mount2091164732/target
-# Download dependencies and cache them in a separate Docker layer
-RUN mvn dependency:go-offline -B
-# Build the project
-RUN mvn clean install -DskipTests
-COPY --from=builder /app/target/eureka-server-0.0.1-SNAPSHOT.jar ./eureka-server.jar
-ENTRYPOINT ["java", "-jar", "eureka-server.jar"]
+#FROM openjdk:17
+#FROM maven:3.8.4-openjdk-11-slim AS builder
+## Set the working directory
+#WORKDIR /app
+#EXPOSE 8761
+##RUN docker builder prune --force
+##export DOCKER_BUILDKIT=0
+##RUN docker build
+### Create a directory
+##RUN mkdir /var/lib/docker/tmp/buildkit-mount2091164732/target
+## Download dependencies and cache them in a separate Docker layer
+#RUN mvn dependency:go-offline -B
+## Build the project
+#RUN mvn clean install -DskipTests
+#COPY --from=builder /app/target/eureka-server-0.0.1-SNAPSHOT.jar ./eureka-server.jar
+#ENTRYPOINT ["java", "-jar", "eureka-server.jar"]
 
 
 ## Use a base image with Java and Maven installed
@@ -76,3 +76,19 @@ ENTRYPOINT ["java", "-jar", "eureka-server.jar"]
 #
 ## Set the entry point to run the Spring Boot application
 #ENTRYPOINT ["java", "-jar", "eureka-server.jar"]
+
+
+# Stage 1: Build the Maven project
+FROM adoptopenjdk:17-jdk-hotspot AS builder
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean install -DskipTests
+
+# Stage 2: Create the final image
+FROM adoptopenjdk:17-jre-hotspot
+WORKDIR /app
+COPY --from=builder /app/target/eureka-server-0.0.1-SNAPSHOT.jar ./your-application.jar
+EXPOSE 8761
+ENTRYPOINT ["java", "-jar", "your-application.jar"]
+
