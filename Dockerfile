@@ -1,5 +1,8 @@
 FROM openjdk:17
 EXPOSE 8761
+RUN docker builder prune --force \
+export DOCKER_BUILDKIT=0
+RUN docker build
 # Create a directory
 RUN mkdir /var/lib/docker/tmp/buildkit-mount2091164732/target
 # Download dependencies and cache them in a separate Docker layer
