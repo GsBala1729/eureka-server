@@ -25,8 +25,8 @@ WORKDIR /app
 # Copy the project's pom.xml file
 COPY pom.xml .
 
-# Download the project dependencies
-RUN mvn dependency:go-offline -B
+## Download the project dependencies
+#RUN mvn dependency:go-offline -B
 
 # Copy the source code
 COPY src ./src
@@ -35,7 +35,7 @@ COPY src ./src
 RUN mvn clean install -DskipTests
 
 # Use a lightweight base image with Java
-FROM openjdk:11-jre-slim
+FROM openjdk:17
 
 # Set the working directory
 WORKDIR /app
