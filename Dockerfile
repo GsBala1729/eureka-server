@@ -80,6 +80,7 @@
 
 # Stage 1: Build the Maven project
 FROM openjdk:17 AS builder
+FROM maven:3.8.4-openjdk-11-slim AS builder
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
