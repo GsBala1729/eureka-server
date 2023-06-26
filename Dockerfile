@@ -48,7 +48,7 @@
 
 
 # Use a base image with Java 17, Maven, and Git installed
-FROM adoptopenjdk:17-jdk-hotspot AS builder
+FROM openjdk:17-jdk AS builder
 
 # Set the working directory
 WORKDIR /app
@@ -61,7 +61,7 @@ COPY src ./src
 RUN mvn clean install -DskipTests
 
 # Use a lightweight base image with Java 17 and JRE
-FROM adoptopenjdk:17-jre-hotspot
+FROM openjdk:17-jdk
 
 # Set the working directory
 WORKDIR /app
