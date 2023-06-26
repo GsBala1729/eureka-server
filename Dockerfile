@@ -4,7 +4,7 @@ RUN docker builder prune --force \
 export DOCKER_BUILDKIT=0
 RUN docker build
 # Create a directory
-RUN mkdir /var/lib/docker/tmp/buildkit-mount2091164732/target
+#RUN mkdir /var/lib/docker/tmp/buildkit-mount2091164732/target
 # Download dependencies and cache them in a separate Docker layer
 RUN mvn dependency:go-offline -B
 # Build the project
