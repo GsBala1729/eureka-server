@@ -16,37 +16,37 @@
 #ENTRYPOINT ["java", "-jar", "eureka-server.jar"]
 
 
-## Use a base image with Java and Maven installed
-#FROM openjdk:17-jdk AS builder
-#
-#FROM maven:3.8.4-openjdk-11-slim AS builder
-#
-## Set the working directory
-#WORKDIR /app
-#
-## Copy the project's pom.xml file
-#COPY pom.xml .
-#
-### Download the project dependencies
-##RUN mvn dependency:go-offline -B
-#
-## Copy the source code
-#COPY src ./src
-#
-## Build the project
-#RUN mvn clean install -DskipTests
-#
-## Use a lightweight base image with Java
-##FROM openjdk:17
-#
-## Set the working directory
-#WORKDIR /app
-#
-## Copy the built JAR file from the builder stage to the final container
-#COPY --from=builder /app/target/eureka-server-0.0.1-SNAPSHOT.jar ./eureka-server.jar
-#
-## Specify the command to run when the container starts
-#CMD ["java", "-jar", "eureka-server.jar"]
+# Use a base image with Java and Maven installed
+FROM openjdk:17-jdk AS builder
+
+FROM maven:3.8.4-openjdk-11-slim AS builder
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the project's pom.xml file
+COPY pom.xml .
+
+## Download the project dependencies
+#RUN mvn dependency:go-offline -B
+
+# Copy the source code
+COPY src ./src
+
+# Build the project
+RUN mvn clean install -DskipTests
+
+# Use a lightweight base image with Java
+#FROM openjdk:17
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the built JAR file from the builder stage to the final container
+COPY --from=builder /app/target/eureka-server-0.0.1-SNAPSHOT.jar ./eureka-server.jar
+
+# Specify the command to run when the container starts
+CMD ["java", "-jar", "eureka-server.jar"]
 
 
 # Use a base image with Java 17, Maven, and Git installed
@@ -79,17 +79,17 @@
 
 
 # Stage 1: Build the Maven project
-FROM openjdk:17 AS builder
-FROM maven:3.8.4-openjdk-11-slim AS builder
-WORKDIR /app
-COPY pom.xml .
-COPY src ./src
-RUN mvn clean install -DskipTests
-
-# Stage 2: Create the final image
-FROM openjdk:17
-WORKDIR /app
-COPY --from=builder /app/target/eureka-server-0.0.1-SNAPSHOT.jar ./your-application.jar
-EXPOSE 8761
-ENTRYPOINT ["java", "-jar", "your-application.jar"]
+#FROM openjdk:17 AS builder
+#FROM maven:3.8.4-openjdk-11-slim AS builder
+#WORKDIR /app
+#COPY pom.xml .
+#COPY src ./src
+#RUN mvn clean install -DskipTests
+#
+## Stage 2: Create the final image
+#FROM openjdk:17
+#WORKDIR /app
+#COPY --from=builder /app/target/eureka-server-0.0.1-SNAPSHOT.jar ./your-application.jar
+#EXPOSE 8761
+#ENTRYPOINT ["java", "-jar", "your-application.jar"]
 
