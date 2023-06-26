@@ -19,7 +19,7 @@
 ## Use a base image with Java and Maven installed
 FROM openjdk:17-jdk AS builder
 
-FROM maven:3.8.4-openjdk-17-slim AS builder
+FROM maven:3.8.4-openjdk-11-slim AS builder
 
 # Set the working directory
 WORKDIR /app
