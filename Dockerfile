@@ -79,14 +79,14 @@
 
 
 # Stage 1: Build the Maven project
-FROM adoptopenjdk:17-jdk-hotspot AS builder
+FROM openjdk:17 AS builder
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 RUN mvn clean install -DskipTests
 
 # Stage 2: Create the final image
-FROM adoptopenjdk:17-jre-hotspot
+FROM openjdk:17
 WORKDIR /app
 COPY --from=builder /app/target/eureka-server-0.0.1-SNAPSHOT.jar ./your-application.jar
 EXPOSE 8761
