@@ -9,5 +9,5 @@ RUN docker build
 RUN mvn dependency:go-offline -B
 # Build the project
 RUN mvn clean install -DskipTests
-ADD target/eureka-server-0.0.1-SNAPSHOT.jar eureka-server.jar
-ENTRYPOINT ["java", "-jar", "eureka-server.jar"]
+#ADD target/eureka-server-0.0.1-SNAPSHOT.jar eureka-server.jar
+ENTRYPOINT ["java", "-jar", "eureka-server-0.0.1-SNAPSHOT.jar"]
