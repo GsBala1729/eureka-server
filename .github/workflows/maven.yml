@@ -14,19 +14,47 @@ on:
   pull_request:
     branches: [ "master" ]
 
-jobs:
-  build:
+env:
+  DOCKER_HUB_USERNAME: gs.bala1729@gmail.com
+  DOCKER_HUB_PASSWORD: BalaDocker@123
 
+jobs:
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: maven
-    - name: Build with Maven
-      working-directory: .
-      run: mvn clean install
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: 17
+
+      - name: Build and package project
+        run: mvn clean install
+
+      - name: Log in to Docker Hub
+        run: echo $DOCKER_HUB_PASSWORD | docker login --username $DOCKER_HUB_USERNAME --password-stdin
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t $DOCKER_HUB_USERNAME/bala-own-image:${{ github.sha }} .
+          docker push $DOCKER_HUB_USERNAME/bala-own-image:${{ github.sha }}
+
+#jobs:
+#  build:
+#
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#    - uses: actions/checkout@v3
+#    - name: Set up JDK 17
+#      uses: actions/setup-java@v3
+#      with:
+#        java-version: '17'
+#        distribution: 'temurin'
+#        cache: maven
+#    - name: Build with Maven
+#      working-directory: .
+#      run: mvn clean install
