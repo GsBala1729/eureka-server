@@ -15,7 +15,7 @@ on:
     branches: [ "master" ]
 
 env:
-  DOCKER_HUB_USERNAME: gs.bala1729@gmail.com
+  DOCKER_HUB_USERNAME: baladocker1729
   DOCKER_HUB_PASSWORD: BalaDocker@123
 
 jobs:
