@@ -68,7 +68,7 @@ jobs:
       with:
         image: baladocker1729/image
         tags: latest
-        registry: registry-url.io
+        registry: docker.io
         dockerfile: Dockerfile
         username: baladocker1729
         password: BalaDocker@123
