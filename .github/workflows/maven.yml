@@ -40,8 +40,10 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t $DOCKER_HUB_USERNAME/bala-own-image:${{ github.sha }} .
-          docker push $DOCKER_HUB_USERNAME/bala-own-image:${{ github.sha }}
+          docker build -t $DOCKER_HUB_USERNAME/bala-own-image:latest .
+          docker push $DOCKER_HUB_USERNAME/bala-own-image:latest
+#          docker build -t $DOCKER_HUB_USERNAME/bala-own-image:${{ github.sha }} .
+#          docker push $DOCKER_HUB_USERNAME/bala-own-image:${{ github.sha }}
 
 #jobs:
 #  build:
