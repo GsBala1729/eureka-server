@@ -16,7 +16,7 @@ on:
 
 env:
   DOCKER_HUB_USERNAME: gs.bala1729@gmail.com
-  DOCKER_HUB_PASSWORD: ${{ BalaDocker@123 }}
+  DOCKER_HUB_PASSWORD: BalaDocker@123
 
 jobs:
   build-and-push:
